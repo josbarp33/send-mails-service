@@ -8,6 +8,7 @@ import { fillTemplate as accessCodeTEmplate } from './templates/accessCode.templ
 import { fillTemplate as notificationPosponedTemplate } from './templates/notificationPosponed.template';
 import { fillTemplate as notificationLinkTemplate } from './templates/notificationLink.template';
 import { fillTemplate as notificationAttendedTemplate } from './templates/notificationAttended.template';
+import { fillTemplate as notificationExpiringTemplate } from './templates/notificationExpiring.template';
 
 
 @Injectable()
@@ -50,6 +51,8 @@ export class EmailService {
                 return notificationLinkTemplate;
             case 'notificationAttended':
                 return notificationAttendedTemplate;
+            case 'notificationExpiring':
+                return notificationExpiringTemplate;
             default:
                 throw new Error(`Template ${template} not found`);
         }

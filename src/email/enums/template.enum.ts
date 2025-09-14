@@ -6,4 +6,5 @@ export enum EmailTemplate {
     notificationPosponed = 'notificationPosponed',
     notificationLink = 'notificationLink',
     notificationAttended = 'notificationAttended',
+    notificationExpiring = 'notificationExpiring',
 }
