@@ -1,5 +1,10 @@
-export const fillTemplate = (variables: any = {}) => {
-    return `
+interface RequestAccessCodeVariables {
+  name?: string;
+  code?: string;
+}
+
+export const fillTemplate = (variables: RequestAccessCodeVariables = {}) => {
+  return `
         <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -14,14 +19,14 @@ export const fillTemplate = (variables: any = {}) => {
                         <h1 style="margin: 0; font-size: 25px; letter-spacing: 1px;">Tu código de acceso temporal</h1>
                     </header>
                     <section style="padding: 24px 26px 10px 26px; color: #333; font-size: 17px; text-align: left;">
-                        <p>Hola <span style="color: #ffd700; font-weight: bold;">${variables.name}</span>,</p>
+                        <p>Hola <span style="color: #ffd700; font-weight: bold;">${variables.name || 'Usuario'}</span>,</p>
                         <p>Estás solicitando acceso a tu panel de miembro en <strong>Hispanos Club</strong>.</p>
                         <p>
                         Usa el siguiente código de acceso temporal para validar tu identidad y continuar con el proceso de reserva o gestión de tus servicios:
                         </p>
                         <div style="text-align:center; margin: 24px 0;">
                         <span style="display: inline-block; background: #ffd700; color: #000; font-size: 2rem; font-weight: bold; letter-spacing: 2px; padding: 16px 32px; border-radius: 8px;">
-                            ${variables.code}
+                            ${variables.code || 'N/A'}
                         </span>
                         </div>
                         <p style="color:#888; font-size:15px; text-align:center;">
@@ -37,4 +42,4 @@ export const fillTemplate = (variables: any = {}) => {
             </body>
         </html>
     `;
-}
+};

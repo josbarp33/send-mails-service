@@ -5,7 +5,6 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-
   app.setGlobalPrefix('api');
 
   app.enableCors({
@@ -13,7 +12,7 @@ async function bootstrap() {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     preflightContinue: false,
     optionsSuccessStatus: 204,
-  })
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -22,12 +21,11 @@ async function bootstrap() {
       transform: true,
       transformOptions: {
         enableImplicitConversion: true,
-      }
-    })
-  )
-
+      },
+    }),
+  );
 
   await app.listen(process.env.PORT ?? 3200);
   console.log(`Server is running on port ${process.env.PORT ?? 3200}`);
 }
-bootstrap();
+void bootstrap();

@@ -10,54 +10,53 @@ import { fillTemplate as notificationLinkTemplate } from './templates/notificati
 import { fillTemplate as notificationAttendedTemplate } from './templates/notificationAttended.template';
 import { fillTemplate as notificationExpiringTemplate } from './templates/notificationExpiring.template';
 
-
 @Injectable()
 export class EmailService {
+  constructor(private readonly emailProvider: EmailProvider) {}
 
-    constructor(
-        private readonly emailProvider: EmailProvider,
-    ) {}
-
-    async sendEmail(emailDto: SendMailDto): Promise<void> {
-        try {
-            const {from, to, subject} = emailDto;
-            const html = await this.getTemplate(emailDto.template, emailDto.data);
-            await this.emailProvider.sendEmail(from, to, subject, html);
-        } catch (error) {
-            console.error('Error sending email:', error);
-            throw new Error(`Failed to send email: ${error.message}`);
-        }
+  async sendEmail(emailDto: SendMailDto): Promise<void> {
+    try {
+      const { from, to, subject } = emailDto;
+      const html = this.getTemplate(emailDto.template, emailDto.data);
+      await this.emailProvider.sendEmail(from, to, subject, html);
+    } catch (error: unknown) {
+      console.error('Error sending email:', error);
+      const errorObj = error as Error;
+      throw new Error(
+        `Failed to send email: ${errorObj.message || 'Unknown error'}`,
+      );
     }
+  }
 
-    async getTemplate(templateName: string, variables: any = {}): Promise<string> {
-        const template = this.getTemplateFile(templateName);
-        const html = await template(variables || {});
-        return html;
+  getTemplate(
+    templateName: string,
+    variables: Record<string, any> = {},
+  ): string {
+    const template = this.getTemplateFile(templateName);
+    const html = template(variables || {});
+    return html;
+  }
+
+  private getTemplateFile(template: string) {
+    switch (template) {
+      case 'welcome':
+        return welcomeTemplate;
+      case 'requestAccessCode':
+        return requestAccessCodeTemplate;
+      case 'request':
+        return requestTemplate;
+      case 'accessCode':
+        return accessCodeTEmplate;
+      case 'notificationPosponed':
+        return notificationPosponedTemplate;
+      case 'notificationLink':
+        return notificationLinkTemplate;
+      case 'notificationAttended':
+        return notificationAttendedTemplate;
+      case 'notificationExpiring':
+        return notificationExpiringTemplate;
+      default:
+        throw new Error(`Template ${template} not found`);
     }
-
-    private getTemplateFile(template: string) {
-        switch(template) {
-            case 'welcome':
-                return welcomeTemplate;
-            case 'requestAccessCode':
-                return requestAccessCodeTemplate;
-            case'request':
-                return requestTemplate;
-            case 'accessCode':
-                return accessCodeTEmplate;
-            case 'notificationPosponed':
-                return notificationPosponedTemplate;
-            case 'notificationLink':
-                return notificationLinkTemplate;
-            case 'notificationAttended':
-                return notificationAttendedTemplate;
-            case 'notificationExpiring':
-                return notificationExpiringTemplate;
-            default:
-                throw new Error(`Template ${template} not found`);
-        }
-    }   
-
-
-
+  }
 }

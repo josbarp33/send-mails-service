@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    EmailModule
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

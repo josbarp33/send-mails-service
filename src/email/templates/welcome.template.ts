@@ -1,15 +1,24 @@
-export const fillTemplate = async (variables: any = {}) => {
+interface WelcomeVariables {
+  name?: string;
+  servicesIncludes?: Array<{
+    title: string;
+    description: string;
+  }>;
+}
 
-    const servicesIncludesHtml = await variables.servicesIncludes.map(element => {
-        return `
+export const fillTemplate = (variables: WelcomeVariables = {}) => {
+  const servicesIncludesHtml = (variables.servicesIncludes || [])
+    .map((element) => {
+      return `
             <li style="margin-bottom: 10px; padding-left: 24px; position: relative; font-size: 15px;">
                 <span style="position: absolute; left: 0; top: 0; color: #d4af37; font-size: 15px;">✔</span>
                 <strong>${element.title}</strong><br />${element.description}
             </li>
         `;
-    }).join(''); 
+    })
+    .join('');
 
-    return `
+  return `
         <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -25,7 +34,7 @@ export const fillTemplate = async (variables: any = {}) => {
                             <p style="margin: 6px 0 0 0; font-size: 18px; color: #fffbe5; font-weight: 600;">Erika Raigoso</p>
                         </header>
                         <section style="padding: 30px 28px 15px 28px; color: #333; font-size: 18px; text-align: left;">
-                            !Hola <span style="color: #ffd700; font-weight: bold; font-size: 22px;">${variables.name}</span>!,<br><br>
+                            !Hola <span style="color: #ffd700; font-weight: bold; font-size: 22px;">${variables.name || 'Usuario'}</span>!,<br><br>
                             ¡Primero, queremos felicitarte. Tomar la decisión de emigrar y construir una nueva vida no es sencillo; requiere valor, determinación y un gran corazón. Y ahora, al unirte a Hispanos Club, has dado otro paso valiente: rodearte de una comunidad que está aquí para acompañarte y apoyarte en cada etapa de tu camino en España!<br>
                             <br>
                             Como nuevo miembro, queremos invitarte a agendar tu primera sesión de consultoría personalizada. Podrás elegir el tema que más te interese y reservar tu cita y máximo en en las próximas 48 horas recibirás tu consultoría online.<br>
@@ -57,7 +66,7 @@ export const fillTemplate = async (variables: any = {}) => {
                             <p>Bienvenido/a a tu nueva casa en España. Con Hispanos Club nunca estarás solo/a.
                                 <br />¡Gracias por confiar en nosotros!
                                 Un abrazo,<br />
-                                <br />El equipo de Hispanos Club
+                                <br />El equipo de Hispanos Club
                             </p>
                             <p>&copy; 2025 Hispanos Executive Club. Todos los derechos reservados.</p>
                         </footer>
@@ -66,4 +75,4 @@ export const fillTemplate = async (variables: any = {}) => {
             </body>
         </html>
     `;
-}
+};

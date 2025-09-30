@@ -1,5 +1,11 @@
-export const fillTemplate = (variables: any = {}) => {
-    return `
+interface NotificationAttendedVariables {
+  subscriberName?: string;
+  serviceName?: string;
+  teamName?: string;
+}
+
+export const fillTemplate = (variables: NotificationAttendedVariables = {}) => {
+  return `
         <!DOCTYPE html>
             <html lang="en">
             <head>
@@ -14,12 +20,12 @@ export const fillTemplate = (variables: any = {}) => {
                         <h1 style="margin: 0; font-size: 25px; letter-spacing: 1px;">Asesoría Atendida</h1>
                     </header>
                     <section style="padding: 24px 26px 10px 26px; color: #333; font-size: 17px; text-align: left;">
-                        <p>Hola <span style="color: #ffd700; font-weight: bold;">${variables.subscriberName}</span>,</p>
-                        <p>Tu solicitud de asesoría para el servicio <strong>${variables.serviceName}</strong> ha sido atendida por nuestro equipo.</p>
+                        <p>Hola <span style="color: #ffd700; font-weight: bold;">${variables.subscriberName || 'Usuario'}</span>,</p>
+                        <p>Tu solicitud de asesoría para el servicio <strong>${variables.serviceName || 'N/A'}</strong> ha sido atendida por nuestro equipo.</p>
                         
                         <div style="background-color: #f8f9fa; border-left: 4px solid #ffd700; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
                         <h3 style="margin: 0 0 15px 0; color: #333; font-size: 18px;">📋 Próximos Pasos</h3>
-                        <p style="margin: 8px 0;">El responsable del servicio <strong>${variables.teamName}</strong> se pondrá en contacto contigo pronto para coordinar los detalles de tu asesoría.</p>
+                        <p style="margin: 8px 0;">El responsable del servicio <strong>${variables.teamName || 'N/A'}</strong> se pondrá en contacto contigo pronto para coordinar los detalles de tu asesoría.</p>
                         <p style="margin: 8px 0;">Por favor, revisa tu email regularmente y asegúrate de que tu bandeja de spam no bloquee nuestros mensajes.</p>
                         </div>
 
@@ -45,4 +51,4 @@ export const fillTemplate = (variables: any = {}) => {
             </body>
         </html>
     `;
-}
+};
