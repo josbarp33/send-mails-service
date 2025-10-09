@@ -1,18 +1,15 @@
 interface WelcomeVariables {
   name?: string;
-  servicesIncludes?: Array<{
-    title: string;
-    description: string;
-  }>;
+  services?: Array<string>;
 }
 
 export const fillTemplate = (variables: WelcomeVariables = {}) => {
-  const servicesIncludesHtml = (variables.servicesIncludes || [])
+  const servicesIncludesHtml = (variables.services || [])
     .map((element) => {
       return `
             <li style="margin-bottom: 10px; padding-left: 24px; position: relative; font-size: 15px;">
                 <span style="position: absolute; left: 0; top: 0; color: #d4af37; font-size: 15px;">✔</span>
-                <strong>${element.title}</strong><br />${element.description}
+                <strong>${element}</strong>
             </li>
         `;
     })
